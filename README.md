@@ -10,9 +10,9 @@
 <b>Виды платформ:</b>
 <ul>
  <li>Платформы, движущиеся в горизонтальном и вертикальном направлениях</li>
- <img width="111" alt="horizontal_platform" src="https://github.com/PalastrovaS/PlatformGame/assets/130470961/bac0a9b7-fe38-44ea-8062-07c17134aac7">
+<img width="111" alt="horizontal_platform" src="https://github.com/PalastrovaS/PlatformGame/assets/130470961/bac0a9b7-fe38-44ea-8062-07c17134aac7">
  
- <img width="67" alt="vertical_platform" src="https://github.com/PalastrovaS/PlatformGame/assets/130470961/fc40a829-c3b1-4faa-b0b4-4a1ddd29d80e">
+<img width="67" alt="vertical_platform" src="https://github.com/PalastrovaS/PlatformGame/assets/130470961/fc40a829-c3b1-4faa-b0b4-4a1ddd29d80e">
  <li>Статичные платформы</li>
  <li>Платформы-телепорты (появляются на втором уровне)</li>
  <img width="192" alt="teleport_platform" src="https://github.com/PalastrovaS/PlatformGame/assets/130470961/00857050-76b6-4164-a6ea-2cf46a426c0c">
