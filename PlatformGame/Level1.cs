@@ -86,6 +86,7 @@ namespace PlatformGame
         private void MainTimerEvents(object sender, EventArgs e)
         {
             MovePlayer();
+            MoveHorizontalPlatform();
             DeadInConflict();
             foreach (Control x in this.Controls)
             {
@@ -104,18 +105,27 @@ namespace PlatformGame
                     // Платформа перемещается на передний план, на переднюю часть формы
                     x.BringToFront();
                 }
-                if (x is PictureBox && (string)x.Tag == "horizontalPlatform")
+            }
+
+            /// <summary>
+            /// Метод для осуществления перемещения платформ в вертикальном направлении
+            /// </summary>
+            void MoveHorizontalPlatform()
+            {
+                foreach (Control x in this.Controls)
                 {
-                    //Платформа, движущаяся в горизонтальном направлении перемещается влево
-                    x.Left -= horizontalSpeed;
-                    // Если платформа выходит за границы формы, то меняем направление движения на противоположное
-                    if (x.Left < 200 || x.Left + x.Width > ClientSize.Width)
+                    if (x is PictureBox && (string)x.Tag == "horizontalPlatform")
                     {
-                        horizontalSpeed = -horizontalSpeed;
+                        //Платформа, движущаяся в горизонтальном направлении перемещается влево
+                        x.Left -= horizontalSpeed;
+                        // Если платформа выходит за границы формы, то меняем направление движения на противоположное
+                        if (x.Left < 200 || x.Left + x.Width > ClientSize.Width)
+                        {
+                            horizontalSpeed = -horizontalSpeed;
+                        }
                     }
                 }
             }
-
 
             // Если игрок дошел до молота, то молот исчезает и устанавливается флаг haveHammer в true
             if (player.Bounds.IntersectsWith(hammer.Bounds))
@@ -126,6 +136,7 @@ namespace PlatformGame
             // Если игрок пересекается с выходом-порталом и флаг haveHammer равен true, то останавливаем таймер и выводим сообщение о прохождении уровня, а затем перезапускаем игру
             if (player.Bounds.IntersectsWith(exit.Bounds) && haveHammer == true)
             {
+                exit.Image = Properties.Resources.fixed_door;
                 gameTimer.Stop();
                 MessageBox.Show("Вы починили портал! " + Environment.NewLine + "Уровень пройден");
                 Level2 level2 = new Level2();

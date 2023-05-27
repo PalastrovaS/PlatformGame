@@ -86,6 +86,8 @@ namespace PlatformGame
         private void MainTimerEvent(object sender, EventArgs e)
         {
             MovePlayer();
+            MoveEnemy();
+            MoveVerticalPlatform();
             DeadInConflict();
             foreach (Control x in this.Controls)
             {
@@ -104,22 +106,6 @@ namespace PlatformGame
                     // Платформа перемещается на передний план, на переднюю часть формы
                     x.BringToFront();
                 }
-                if (x is PictureBox && (string)x.Tag == "verticalPlatform")
-                {
-                    //Платформа, движущаяся в вкертикальном направлении перемещается вниз
-                    x.Top -= verticalSpeed;
-                    // Если платформа выходит за указанные границы, то меняем направление движения на противоположное
-                    if (x.Top < 100 || x.Top + x.Height > 500)
-                    {
-                        verticalSpeed = -verticalSpeed;
-                    }
-                }
-            }
-            movingEnemy.Left -= movingEnemySpeed;
-            // Если движущийся враг выходит за границы платформы, то меняем направление движения на противоположное
-            if (movingEnemy.Left < platformWithMovingEnemy.Left || movingEnemy.Left + movingEnemy.Width > platformWithMovingEnemy.Right)
-            {
-                movingEnemySpeed = -movingEnemySpeed;
             }
             // Если игрок дошел до отвертки, то молот исчезает и устанавливается флаг haveScrewdriver в true
             if (player.Bounds.IntersectsWith(screwdriver.Bounds))
@@ -130,10 +116,43 @@ namespace PlatformGame
             // Если игрок пересекается с выходом-порталом и флаг haveScrewdriver равен true, то останавливаем таймер и выводим сообщение о прохождении уровня, а затем перезапускаем игру
             if (player.Bounds.IntersectsWith(exit.Bounds) && haveScrewdriver == true)
             {
+                exit.Image = Properties.Resources.fixed_door;
                 gameTimer.Stop();
                 MessageBox.Show("Вы починили портал! " + Environment.NewLine + "Уровень пройден");
                 Level2 level2 = new Level2();
                 level2.Show();
+            }
+        }
+        /// <summary>
+        /// Метод для осуществления перемещения врага
+        /// </summary>
+        void MoveEnemy()
+        {
+            movingEnemy.Left -= movingEnemySpeed;
+            // Если движущийся враг выходит за границы платформы, то меняем направление движения на противоположное
+            if (movingEnemy.Left < platformWithMovingEnemy.Left || movingEnemy.Left + movingEnemy.Width > platformWithMovingEnemy.Right)
+            {
+                movingEnemySpeed = -movingEnemySpeed;
+            }
+        }
+
+        /// <summary>
+        /// Метод для осуществления перемещения платформ в вертикальном направлении
+        /// </summary>
+        void MoveVerticalPlatform()
+        {
+            foreach (Control x in this.Controls)
+            {
+                if (x is PictureBox && (string)x.Tag == "verticalPlatform")
+                {
+                    //Платформа, движущаяся в вкертикальном направлении перемещается вниз
+                    x.Top -= verticalSpeed;
+                    // Если платформа выходит за указанные границы, то меняем направление движения на противоположное
+                    if (x.Top < 100 || x.Top + x.Height > 500)
+                    {
+                        verticalSpeed = -verticalSpeed;
+                    }
+                }
             }
         }
 
